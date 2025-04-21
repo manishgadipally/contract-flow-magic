@@ -1,5 +1,9 @@
 
 export interface ContractParty {
+  endDate: string;
+  rate: string;
+  startDate: string;
+  placeOfService: string;
   name: string;
   email: string;
   organization?: string;

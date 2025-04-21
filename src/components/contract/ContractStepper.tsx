@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { cn } from '@/lib/utils';
+import { cn } from '../../lib/utils';
 import { Check, AlertCircle, Pencil, Send, FileSignature, PlayCircle, Clock } from 'lucide-react';
 
 export type StepStatus = 'completed' | 'current' | 'upcoming';

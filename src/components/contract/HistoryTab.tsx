@@ -1,7 +1,7 @@
 
 import React from 'react';
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
-import { ContractHistoryItem } from '@/types/contract';
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "../../components/ui/card";
+import { ContractHistoryItem } from '../../types/contract';
 import { Clock, User, FileText } from 'lucide-react';
 
 interface HistoryTabProps {

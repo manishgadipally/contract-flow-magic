@@ -1,17 +1,17 @@
 
 import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { useToast } from '@/components/ui/use-toast';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Switch } from '@/components/ui/switch';
-import { Form, FormField, FormItem, FormLabel, FormControl, FormDescription } from '@/components/ui/form';
-import { Contract, ContractParty, ContractDetails, PaymentInterval, PaymentTranche } from '@/types/contract';
+import { useToast } from '../../components/ui/use-toast';
+import { Button } from '../../components/ui/button';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '../../components/ui/card';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '../../components/ui/tabs';
+import { Input } from '../../components/ui/input';
+import { Textarea } from '../../components/ui/textarea';
+import { Label } from '../../components/ui/label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../../components/ui/select';
+import { Switch } from '../../components/ui/switch';
+import { Form, FormField, FormItem, FormLabel, FormControl, FormDescription } from '../../components/ui/form';
+import { Contract, ContractParty, ContractDetails, PaymentInterval, PaymentTranche } from '../../types/contract';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
@@ -28,10 +28,18 @@ const getMockContract = (): Contract => ({
   from: {
     name: 'Sai Teja Kotagiri',
     email: 'samjose@gmail.com',
+    endDate: '',
+    rate: '',
+    startDate: '',
+    placeOfService: ''
   },
   to: {
     name: 'Mittu HIC',
     email: 'mittuhic@example.com',
+    endDate: '',
+    rate: '',
+    startDate: '',
+    placeOfService: ''
   },
   details: {
     placeOfService: 'Building number 220Hyderabad Telangana 50007',
@@ -218,18 +226,26 @@ const AdminContractEditor = () => {
     if (!contract.payment) return;
     
     const updatedContract = { ...contract };
-    const intervalIndex = updatedContract.payment.PaymentPlans[0].PaymentIntervals.findIndex(
+    const intervalIndex = updatedContract.payment?.PaymentPlans[0].PaymentIntervals.findIndex(
       interval => interval.PaymentFrequency === intervalFrequency
     );
     
-    if (intervalIndex === -1) return;
+    if (intervalIndex === -1 || intervalIndex === undefined) return;
     
-    updatedContract.payment.PaymentPlans[0].PaymentIntervals[intervalIndex].Tranches[trancheIndex].Status = newStatus;
+    if (updatedContract.payment) {
+      if (updatedContract.payment.PaymentPlans[0].PaymentIntervals[intervalIndex] && updatedContract.payment.PaymentPlans[0].PaymentIntervals[intervalIndex].Tranches[trancheIndex]) {
+        updatedContract.payment.PaymentPlans[0].PaymentIntervals[intervalIndex].Tranches[trancheIndex].Status = newStatus;
+      }
+    }
     
     if (newStatus === 'requested') {
-      updatedContract.payment.PaymentPlans[0].PaymentIntervals[intervalIndex].Tranches[trancheIndex].RequestDate = new Date().toISOString();
+      if (updatedContract.payment) {
+        updatedContract.payment.PaymentPlans[0].PaymentIntervals[intervalIndex].Tranches[trancheIndex].RequestDate = new Date().toISOString();
+      }
     } else if (newStatus === 'paid') {
-      updatedContract.payment.PaymentPlans[0].PaymentIntervals[intervalIndex].Tranches[trancheIndex].PaymentDate = new Date().toISOString();
+      if (updatedContract.payment) {
+        updatedContract.payment.PaymentPlans[0].PaymentIntervals[intervalIndex].Tranches[trancheIndex].PaymentDate = new Date().toISOString();
+      }
     }
     
     updatedContract.updatedAt = new Date().toISOString();

@@ -1,10 +1,10 @@
 
 import React from 'react';
-import { cn } from '@/lib/utils';
+import { cn } from '../../lib/utils';
 import { Clock, User, DollarSign, MapPin, Calendar, Edit } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { TooltipProvider, Tooltip, TooltipTrigger, TooltipContent } from '@/components/ui/tooltip';
+import { Button } from '../../components/ui/button';
+import { Badge } from '../../components/ui/badge';
+import { TooltipProvider, Tooltip, TooltipTrigger, TooltipContent } from '../../components/ui/tooltip';
 
 export interface ContractSummaryProps {
   contract: {
@@ -27,7 +27,7 @@ export interface ContractSummaryProps {
     createdAt: string;
     progress: number;
   };
-  onEdit?: (type: 'from' | 'to' | 'place' | 'duration' | 'rate', title: string, data: any) => void;
+  onEdit?: (type: 'from' | 'to' | 'place' | 'duration' | 'rate', title: string, data: unknown) => void;
   onSendForReview?: () => void;
   onDelete?: () => void;
   onDownloadPdf?: () => void;

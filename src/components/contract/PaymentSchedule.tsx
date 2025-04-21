@@ -1,10 +1,10 @@
 
 import React from 'react';
 import { format } from 'date-fns';
-import { PaymentInterval, PaymentTranche } from '@/types/contract';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { PaymentInterval, PaymentTranche } from '../../types/contract';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../../components/ui/table';
 import { Calendar, DollarSign } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { cn } from '../../lib/utils';
 
 interface PaymentScheduleProps {
   interval: PaymentInterval;

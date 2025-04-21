@@ -1,15 +1,15 @@
 
 import React, { useEffect, useState } from 'react';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
-import { Button } from '@/components/ui/button';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '../../components/ui/dialog';
+import { Button } from '../../components/ui/button';
 import { AlertCircle, CheckCircle, DollarSign, Calendar, ArrowRight, ArrowLeft } from 'lucide-react';
-import { Progress } from '@/components/ui/progress';
-import { cn } from '@/lib/utils';
+import { Progress } from '../../components/ui/progress';
+import { cn } from '../../lib/utils';
 
 interface ReviewModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onComplete: (data: any) => void;
+  onComplete: (data: unknown) => void;
   contractData: {
     fromName: string;
     toName: string;

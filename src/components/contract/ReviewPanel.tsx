@@ -1,18 +1,18 @@
 
 import React, { useEffect, useState } from 'react';
-import { cn } from '@/lib/utils';
-import { Button } from '@/components/ui/button';
+import { cn } from '../../lib/utils';
+import { Button } from '../../components/ui/button';
 import { X, AlertTriangle, Calendar, DollarSign, Clock, CheckCircle2 } from 'lucide-react';
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { Label } from '@/components/ui/label';
-import { Input } from '@/components/ui/input';
+import { RadioGroup, RadioGroupItem } from '../../components/ui/radio-group';
+import { Label } from '../../components/ui/label';
+import { Input } from '../../components/ui/input';
 import PaymentSchedule from './PaymentSchedule';
-import { PaymentInterval } from '@/types/contract';
+import { PaymentInterval } from '../../types/contract';
 
 interface ReviewPanelProps {
   isOpen: boolean;
   onClose: () => void;
-  onComplete: (data: any) => void;
+  onComplete: (data: unknown) => void;
   contractData: {
     fromName: string;
     toName: string;

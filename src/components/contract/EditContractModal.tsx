@@ -1,24 +1,31 @@
 
 import React, { useEffect } from 'react';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "../../components/ui/dialog";
+import { Button } from "../../components/ui/button";
+import { Input } from "../../components/ui/input";
+import { Textarea } from "../../components/ui/textarea";
+import { Label } from "../../components/ui/label";
 
 interface EditContractModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSave: (data: any) => void;
+  onSave: (data: unknown) => void;
   section: {
     type: 'from' | 'to' | 'place' | 'duration' | 'rate';
     title: string;
-    data: any;
+    data: unknown;
   };
 }
 
 const EditContractModal = ({ isOpen, onClose, onSave, section }: EditContractModalProps) => {
-  const [formData, setFormData] = React.useState<any>({});
+  const [formData, setFormData] = React.useState<{
+    name?: string;
+    email?: string;
+    placeOfService?: string;
+    startDate?: string;
+    endDate?: string;
+    rate?: string;
+  }>({});
 
   // Update form data when section data changes or modal opens
   useEffect(() => {

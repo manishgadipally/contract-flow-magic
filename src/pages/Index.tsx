@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { useToast } from '@/components/ui/use-toast';
-import ContractStepper, { Step } from '@/components/contract/ContractStepper';
-import ContractSummary from '@/components/contract/ContractSummary';
-import ReviewPanel from '@/components/contract/ReviewPanel';
-import PaymentPlanDisplay from '@/components/contract/PaymentPlanDisplay';
-import EditContractModal from '@/components/contract/EditContractModal';
-import SignatureTab from '@/components/contract/SignatureTab';
-import HistoryTab from '@/components/contract/HistoryTab';
-import { cn } from '@/lib/utils';
+import React, { useState, useEffect, useCallback } from 'react';
+import { useToast } from '../components/ui/use-toast';
+import ContractStepper, { Step } from '../components/contract/ContractStepper';
+import ContractSummary from '../components/contract/ContractSummary';
+import ReviewPanel from '../components/contract/ReviewPanel';
+import PaymentPlanDisplay from '../components/contract/PaymentPlanDisplay';
+import EditContractModal from '../components/contract/EditContractModal';
+import SignatureTab from '../components/contract/SignatureTab';
+import HistoryTab from '../components/contract/HistoryTab';
+import { cn } from '../lib/utils';
 import { 
   Info, 
   Edit, 
@@ -30,17 +30,17 @@ import {
   UserRound,
   RefreshCw
 } from 'lucide-react';
-import { Contract, ContractHistoryItem, PaymentInterval, PaymentTranche } from '@/types/contract';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
-import { Switch } from "@/components/ui/switch";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Contract, ContractHistoryItem, ContractParty, PaymentInterval, PaymentTranche } from '@/types/contract';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "../components/ui/tabs";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "../components/ui/card";
+import { Input } from "../components/ui/input";
+import { Textarea } from "../components/ui/textarea";
+import { Button } from "../components/ui/button";
+import { Label } from "../components/ui/label";
+import { Switch } from "../components/ui/switch";
+import { Badge } from "../components/ui/badge";
+import { Separator } from "../components/ui/separator";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../components/ui/select";
 import { format, addDays, addWeeks, addMonths } from 'date-fns';
 
 const generatePaymentData = (
@@ -77,7 +77,7 @@ const generatePaymentData = (
     );
   }
   
-  let tranches: PaymentTranche[] = [];
+  const tranches: PaymentTranche[] = [];
   
   if (frequency === 'Monthly') {
     let currentDate = new Date(startDate);
@@ -254,10 +254,18 @@ const Index = () => {
     from: {
       name: 'Sai Teja Kotagiri',
       email: 'samjose@gmail.com',
+      rate: '',
+      startDate: '',
+      placeOfService: '',
+      endDate: ''
     },
     to: {
       name: 'Mittu HIC',
       email: 'mittuhic@example.com',
+      rate: '',
+      startDate: '',
+      placeOfService: '',
+      endDate: ''
     },
     details: {
       placeOfService: 'Building number 220Hyderabad Telangana 50007',
@@ -283,7 +291,7 @@ const Index = () => {
     section: {
       type: 'from' | 'to' | 'place' | 'duration' | 'rate';
       title: string;
-      data: any;
+      data: unknown;
     };
   }>({
     isOpen: false,
@@ -319,9 +327,9 @@ const Index = () => {
         payment: updatedPayment
       }));
     }
-  }, [selectedPaymentFrequency, contract?.details]);
+  }, [selectedPaymentFrequency, contract.details, contract]);
 
-  const handleEdit = (type: 'from' | 'to' | 'place' | 'duration' | 'rate', title: string, data: any) => {
+  const handleEdit = (type: 'from' | 'to' | 'place' | 'duration' | 'rate', title: string, data: unknown) => {
     setEditModal({
       isOpen: true,
       section: {
@@ -332,11 +340,11 @@ const Index = () => {
     });
   };
 
-  const handleSaveEdit = (data: any) => {
-    switch (editModal.section.type) {
-      case 'from':
-        setContract(prev => ({ ...prev, from: data }));
-        break;
+  const handleSaveEdit = (data: ContractParty) => {
+      switch (editModal.section.type) {
+        case 'from':
+          setContract(prev => ({ ...prev, from: data }));
+          break;
       case 'to':
         setContract(prev => ({ ...prev, to: data }));
         break;
@@ -421,7 +429,7 @@ const Index = () => {
     setIsReviewPanelOpen(true);
   };
 
-  const handleReviewComplete = (data: any) => {
+  const handleReviewComplete = (data: unknown) => {
     const updatedPayment = { ...contract.payment! };
     
     setContract({
@@ -662,7 +670,7 @@ const Index = () => {
     }));
   };
 
-  const updateStepperStatus = () => {
+  const updateStepperStatus = useCallback(() => {
     const newSteps = [...contractSteps];
     
     newSteps.forEach(step => {
@@ -726,7 +734,7 @@ const Index = () => {
     }
     
     setContractSteps(newSteps);
-  };
+  });
 
   const isSendForReviewEnabled = () => {
     if (isFromUser) {
@@ -751,7 +759,7 @@ const Index = () => {
 
   useEffect(() => {
     updateStepperStatus();
-  }, [contract.status]);
+  }, [contract.status, updateStepperStatus]);
 
   return (
     <div className="min-h-screen bg-gray-50">

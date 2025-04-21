@@ -1,9 +1,9 @@
 
 import React, { useState } from 'react';
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "../../components/ui/card";
+import { Button } from "../../components/ui/button";
 import { AlertCircle, CheckCircle } from 'lucide-react';
-import { Contract, ContractHistoryItem } from '@/types/contract';
+import { Contract, ContractHistoryItem } from '../../types/contract';
 
 interface SignatureTabProps {
   contract: {
