@@ -1,5 +1,6 @@
 
 import type { Config } from "tailwindcss";
+import tailwindcssAnimate from "tailwindcss-animate";
 
 export default {
 	darkMode: ["class"],
@@ -138,7 +139,7 @@ export default {
 				'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
 				'shimmer': 'linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.08) 50%, transparent 100%)',
 			}
-		}
-	},
-	plugins: [require("tailwindcss-animate")],
-} satisfies Config;
+			}
+		},
+		plugins: [tailwindcssAnimate],
+	} satisfies Config;
